@@ -1,0 +1,49 @@
+server:
+  http_addr: ":52661"
+  read_timeout: 30s
+  write_timeout: 30s
+  shutdown_timeout: 15s
+
+data_dir: "./data"
+
+logging:
+  level: "info"
+  format: "json"
+
+gateway:
+  default_timeout: 10s
+  max_retries: 3
+  base_backoff: 500ms
+  max_backoff: 10s
+  circuit_max_fail: 5
+  circuit_reset_after: 30s
+
+scheduler:
+  tick_interval: 5s
+  dispatch_interval: 3s
+  callback_interval: 4s
+  consistency_check: 10s
+  max_retries: 5
+  dead_letter_after: 5
+
+callback:
+  max_attempts: 5
+  base_backoff: 1s
+  max_backoff: 60s
+  timeout: 10s
+
+signing_key: "change-this-in-production"
+
+upstreams:
+  - id: "upstream-primary"
+    name: "Primary Testing Center"
+    base_url: "http://127.0.0.1:52662"
+    timeout: 10s
+    priority: 1
+    standards: ["GB-9706", "YY-0505"]
+  - id: "upstream-backup"
+    name: "Backup Testing Center"
+    base_url: "http://127.0.0.1:52663"
+    timeout: 10s
+    priority: 2
+    standards: ["GB-9706"]
